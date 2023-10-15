@@ -6,7 +6,11 @@
   <title>Document</title>
 </head>
 <body>
-  <div id="tax_inc"></div>
+  <table border="2">
+    <th>御請求金額</th>
+    <td id="total_amount"></td>
+  </table>
+  <br>
 
   <table border="1">
     <tr>
@@ -17,51 +21,64 @@
     </tr>
     <tr>
       <th>商品Ａ</th>
-      <td ><input type="number" id="unit_cost_a"></td>
+      <td ><input type="number" id="amount_a"></td>
       <td ><input type="number" id="quantity_a"></td>
       <td id="total_a"></td>
     </tr>
     <th>商品Ｂ</th>
-    <td ><input type="number" id="unit_cost_b"></td>
+    <td ><input type="number" id="amount_b"></td>
     <td ><input type="number" id="quantity_b"></td>
     <td id="total_b"></td>
   </table>
-  <div ib="price"></div>
-  <div id="tax"></div>
+ 
+  <p>小計</p>
+  <div id="subtotal"></div>
+  <br>
 
+  <p>消費税（10％）</p>
+  <div id="tax"></div>
+  <br>
 
   <input type="button" value="計算" onclick="display()"/>
 
   <script>
      function display() {
-      let unit_cost_a = document.getElementById('unit_cost_a').value;
+      let amount_a = document.getElementById('amount_a').value;
       let quantity_a = document.getElementById('quantity_a').value;
-      let unit_cost_b = document.getElementById('unit_cost_b').value;
+      let amount_b = document.getElementById('amount_b').value;
       let quantity_b = document.getElementById('quantity_b').value;
 
+      // 商品Ａの金額を求める
       let total_a = document.getElementById('total_a');
-      total_a.textContent = calc_total(unit_cost_a, quantity_a);
+      total_a.textContent = calc_product(amount_a, quantity_a);
 
+      // 商品Ｂの金額を求める
       let total_b = document.getElementById('total_b');
-      total_b.textContent = calc_total(unit_cost_b, quantity_b);
+      total_b.textContent = calc_product(amount_b, quantity_b);
 
-      let price = document.getElementById('price');
-      let a = total_a.textContent;
-      price.textContent = calc_total(a, total_b.textContent);
+      // 小計を求める
+      let subtotal = document.getElementById('subtotal');
+      subtotal.textContent = calc_sum(Number(total_a.textContent), Number(total_b.textContent));
 
+      // 消費税（10％）を求める
       let tax = document.getElementById('tax');
-      tax.textContent = calc_tax(price);
+      tax.textContent = calc_tax(Number(subtotal.textContent));
 
-      let tax_inc = document.getElementById('tax_inc');
-      tax_inc.textContent = calc_total(price, tax); 
+      // 合計金額を求める（小計 ＋ 消費税（10％））
+      let total_amount = document.getElementById('total_amount');
+      total_amount.textContent = calc_sum(Number(subtotal.textContent), Number(tax.textContent)); 
      }
 
-    function calc_total(value1, value2){
+    function calc_product(value1, value2){
       return value1 * value2;
     }
 
     function calc_tax(value){
-      return value * 1.1
+      return value * 0.1
+    }
+
+    function calc_sum(value1, value2){
+      return value1 +  value2
     }
   </script>
 </body>
