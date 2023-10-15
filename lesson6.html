@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div id="tax_inc"></div>
+
+  <table border="1">
+    <tr>
+      <th>内容</th>
+      <th>単価</th>
+      <th>数量</th>
+      <th>金額</th>
+    </tr>
+    <tr>
+      <th>商品Ａ</th>
+      <td ><input type="number" id="unit_cost_a"></td>
+      <td ><input type="number" id="quantity_a"></td>
+      <td id="total_a"></td>
+    </tr>
+    <th>商品Ｂ</th>
+    <td ><input type="number" id="unit_cost_b"></td>
+    <td ><input type="number" id="quantity_b"></td>
+    <td id="total_b"></td>
+  </table>
+  <div ib="price"></div>
+  <div id="tax"></div>
+
+
+  <input type="button" value="計算" onclick="display()"/>
+
+  <script>
+     function display() {
+      let unit_cost_a = document.getElementById('unit_cost_a').value;
+      let quantity_a = document.getElementById('quantity_a').value;
+      let unit_cost_b = document.getElementById('unit_cost_b').value;
+      let quantity_b = document.getElementById('quantity_b').value;
+
+      let total_a = document.getElementById('total_a');
+      total_a.textContent = calc_total(unit_cost_a, quantity_a);
+
+      let total_b = document.getElementById('total_b');
+      total_b.textContent = calc_total(unit_cost_b, quantity_b);
+
+      let price = document.getElementById('price');
+      let a = total_a.textContent;
+      price.textContent = calc_total(a, total_b.textContent);
+
+      let tax = document.getElementById('tax');
+      tax.textContent = calc_tax(price);
+
+      let tax_inc = document.getElementById('tax_inc');
+      tax_inc.textContent = calc_total(price, tax); 
+     }
+
+    function calc_total(value1, value2){
+      return value1 * value2;
+    }
+
+    function calc_tax(value){
+      return value * 1.1
+    }
+  </script>
+</body>
+</html>
