@@ -8,7 +8,7 @@
 <body>
   <table border="2">
     <th>御請求金額</th>
-    <td id="total_amount"></td>
+    <td class="total_amount"></td>
   </table>
   <br>
 
@@ -39,13 +39,17 @@
   <div id="tax"></div>
   <br>
 
+  <p>合計</p>
+  <div class="total_amount"></div>
+  <br>
+
   <input type="button" value="計算" onclick="display()"/>
 
   <script>
      function display() {
-      let amount_a = document.getElementById('amount_a').value;
+      let amount_a= document.getElementById('amount_a').value;
       let quantity_a = document.getElementById('quantity_a').value;
-      let amount_b = document.getElementById('amount_b').value;
+      let amount_b = document.getElementById('amount_b').value.toLocaleString();
       let quantity_b = document.getElementById('quantity_b').value;
 
       // 商品Ａの金額を求める
@@ -65,7 +69,7 @@
       tax.textContent = calc_tax(Number(subtotal.textContent));
 
       // 合計金額を求める（小計 ＋ 消費税（10％））
-      let total_amount = document.getElementById('total_amount');
+      let total_amount = document.getElementsByClassName('total_amount');
       total_amount.textContent = calc_sum(Number(subtotal.textContent), Number(tax.textContent)); 
      }
 
